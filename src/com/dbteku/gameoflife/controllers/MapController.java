@@ -23,6 +23,9 @@ public class MapController {
 		for (int x = 0; x < numberOfXTiles; x++) {
 			for (int y = 0; y < numberofYTiles; y++) {
 				tiles[x][y] = new Tile(TILE_SIZE);
+				int xPosition = (int) ((x + 1) * tiles[x][y].getImage().getWidth()/2);
+				int yPosition = (int) ((y + 1) * tiles[x][y].getImage().getWidth()/2);
+				world.addObject(tiles[x][y], xPosition, yPosition);
 			}
 		}
 	}
