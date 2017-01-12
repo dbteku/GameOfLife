@@ -19,6 +19,7 @@ public class StartupController {
 	public void start(){
 		controller.createTiles();
 		engine.loadWorld(world);
+		engine.start();
 	}
 	
 }

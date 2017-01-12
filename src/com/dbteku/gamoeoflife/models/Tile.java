@@ -60,5 +60,11 @@ public class Tile extends Actor<Tile>{
 	public void onAnimationFinish(ImageAnimation<Tile> animation) {
 		
 	}
+	
+	@Override
+	public void onClick() {
+//		System.out.println("CLICKING ON TILE: " + getX() + "," + getY());
+		setImage(ON_IMAGE);
+	}
 
 }
