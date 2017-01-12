@@ -32,7 +32,7 @@ public class Tile extends Actor<Tile>{
 
 	@Override
 	public void act() {
-
+		
 	}
 
 	@Override
