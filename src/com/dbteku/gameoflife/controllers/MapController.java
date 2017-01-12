@@ -77,6 +77,19 @@ public class MapController {
 		return neighbors;
 	}
 	
+	public List<Tile> getAliveList(){
+		List<Tile> alive = new ArrayList<>();
+		for (int y = 0; y < yBound; y++) {
+			for (int x = 0; x < xBound; x++) {
+				Tile tile = tiles[x][y];
+				if(tile.isAlive()){
+					alive.add(tile);
+				}
+			}	
+		}
+		return alive;
+	}
+	
 	private TilePosition getPostition(Tile tile){
 		TilePosition position = new TilePosition(-1, -1);
 		if(locations.containsKey(tile)){

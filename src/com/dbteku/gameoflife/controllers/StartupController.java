@@ -20,8 +20,8 @@ public class StartupController {
 	}
 	
 	public void start(){
-		world.addObject(updater, 0, 0);
 		controller.createTiles();
+		world.addObject(updater, 0, 0);
 		engine.loadWorld(world);
 		engine.start();
 	}

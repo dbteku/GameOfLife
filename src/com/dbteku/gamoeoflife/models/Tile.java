@@ -18,7 +18,7 @@ public class Tile extends Actor<Tile>{
 	private static OrbitImage OFF_IMAGE;
 	private MapController controller;
 	private String id;
-	private boolean isOn;
+	private boolean isAlive;
 
 	public Tile(String id, int tileSize) {;
 		this.id = id;
@@ -26,7 +26,7 @@ public class Tile extends Actor<Tile>{
 			ON_IMAGE = new OrbitImage(tileSize, tileSize, Color.BLACK);
 			OFF_IMAGE = new OrbitImage(tileSize, tileSize, Color.WHITE);
 		}
-		isOn = false;
+		isAlive = false;
 		setImage(OFF_IMAGE);
 	}
 
@@ -67,12 +67,16 @@ public class Tile extends Actor<Tile>{
 
 	@Override
 	public void onClick() {
-		if(isOn){
+		if(isAlive){
 			setImage(OFF_IMAGE);
 		}else{
 			setImage(ON_IMAGE);	
 		}
-		isOn = !isOn;
+		isAlive = !isAlive;
+	}
+	
+	public boolean isAlive() {
+		return isAlive;
 	}
 
 	@Override
@@ -81,7 +85,7 @@ public class Tile extends Actor<Tile>{
 		int result = 1;
 		result = prime * result + ((controller == null) ? 0 : controller.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + (isOn ? 1231 : 1237);
+		result = prime * result + (isAlive ? 1231 : 1237);
 		return result;
 	}
 
