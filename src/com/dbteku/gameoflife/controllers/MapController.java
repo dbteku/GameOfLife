@@ -29,14 +29,11 @@ public class MapController {
 				if(lastTile == null){
 					lastTile = tiles[x][y];
 					xPosition = (int) ((x + 1) * tiles[x][y].getImage().getWidth()/2);
-					yPosition = (int) ((y + 1) * tiles[x][y].getImage().getWidth()/2);
+					yPosition = (int) ((y + 1) * tiles[x][y].getImage().getHeight()/2);
 				}else{
-					xPosition = 5;
-					yPosition = lastTile.getY() + 10;
-					lastTile = tiles[x][y];
+					xPosition = (int) ((x + 1) * TILE_SIZE - tiles[x][y].getImage().getWidth()/2);
+					yPosition = (int) ((y + 1) * TILE_SIZE - tiles[x][y].getImage().getHeight()/2);
 				}
-//				System.out.println(xPosition);
-//				System.out.println(yPosition);
 				world.addObject(tiles[x][y], xPosition, yPosition);
 			}
 		}
