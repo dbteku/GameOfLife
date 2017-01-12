@@ -1,31 +1,47 @@
 package com.dbteku.gameoflife.controllers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.dbteku.gamoeoflife.models.Tile;
+import com.dbteku.gamoeoflife.models.TilePosition;
 import com.dbteku.orbit.core.World;
 
 public class MapController {
-	
+
 	private final int TILE_SIZE;
 	private Tile[][] tiles;
 	private World world;
-	
+	private Map<Tile, TilePosition> locations;
+	private int xBound;
+	private int yBound;
+
 	public MapController(World world, int tileSize) {
 		this.TILE_SIZE = tileSize;
 		this.world = world;
+		locations = new HashMap<>();
+		xBound = 0;
+		yBound = 0;
 	}
-	
+
 	public void createTiles(){
 		int worldWidth = world.getWidth();
 		int worldHeight = world.getHeight();
 		int numberOfXTiles = worldWidth / TILE_SIZE;
 		int numberofYTiles = worldHeight / TILE_SIZE;
+		xBound = numberOfXTiles;
+		yBound = numberofYTiles;
 		tiles = new Tile[numberOfXTiles][numberofYTiles];
 		Tile lastTile = null;
 		for (int x = 0; x < numberOfXTiles; x++) {
 			for (int y = 0; y < numberofYTiles; y++) {
 				int xPosition = 0;
 				int yPosition = 0;
-				tiles[x][y] = new Tile(TILE_SIZE);
+				Tile tile= new Tile(x + "," + y, TILE_SIZE);
+				tiles[x][y] = tile;
+				locations.put(tile, new TilePosition(x, y));
 				if(lastTile == null){
 					lastTile = tiles[x][y];
 					xPosition = (int) ((x + 1) * tiles[x][y].getImage().getWidth()/2);
@@ -38,4 +54,127 @@ public class MapController {
 			}
 		}
 	}
+
+	public List<Tile> getNeighbors(Tile tile){
+		List<Tile> neighbors = new ArrayList<>();
+		List<Tile> tryToAdd = new ArrayList<>();
+		TilePosition position = getPostition(tile);
+		if(!position.isNull()){
+			tryToAdd.add(getLeft(position));
+			tryToAdd.add(getLeftTop(position));
+			tryToAdd.add(getTop(position));
+			tryToAdd.add(getRightTop(position));
+			tryToAdd.add(getRight(position));
+			tryToAdd.add(getRightBottom(position));
+			tryToAdd.add(getBottom(position));
+			tryToAdd.add(getLeftBottom(position));
+		}
+		for (Tile possible : tryToAdd) {
+			if(possible != null){
+				neighbors.add(possible);
+			}
+		}
+		return neighbors;
+	}
+	
+	private TilePosition getPostition(Tile tile){
+		TilePosition position = new TilePosition(-1, -1);
+		if(locations.containsKey(tile)){
+			position = locations.get(tile);
+		}
+		return position;
+	}
+	
+	private Tile getLeft(TilePosition position){
+		Tile tile = null;
+		int x = position.getX();
+		int y = position.getY();
+		int newX = x - 1;
+		if(newX >=0){
+			tile = tiles[newX][y];
+		}
+		return tile;
+	}
+	
+	private Tile getLeftTop(TilePosition position){
+		Tile tile = null;
+		int x = position.getX();
+		int y = position.getY();
+		int newX = x - 1;
+		int newY = y - 1;
+		if(newX >= 0 && newY >= 0){
+			tile = tiles[newX][newY];
+		}
+		return tile;
+	}
+	
+	private Tile getTop(TilePosition position){
+		Tile tile = null;
+		int x = position.getX();
+		int y = position.getY();
+		int newY = y - 1;
+		if(newY >= 0){
+			tile = tiles[x][newY];
+		}
+		return tile;
+	}
+	
+	private Tile getRightTop(TilePosition position){
+		Tile tile = null;
+		int x = position.getX();
+		int y = position.getY();
+		int newX = x + 1;
+		int newY = y - 1;
+		if(newX < xBound && newY >= 0){
+			tile = tiles[newX][newY];
+		}
+		return tile;
+	}
+	
+	private Tile getRight(TilePosition position){
+		Tile tile = null;
+		int x = position.getX();
+		int y = position.getY();
+		int newX = x + 1;
+		if(newX < xBound){
+			tile = tiles[newX][y];
+		}
+		return tile;
+	}
+	
+	private Tile getRightBottom(TilePosition position){
+		Tile tile = null;
+		int x = position.getX();
+		int y = position.getY();
+		int newX = x + 1;
+		int newY = y + 1;
+		if(newX < xBound && newY < yBound){
+			tile = tiles[newX][newY];
+		}
+		return tile;
+	}
+	
+	private Tile getBottom(TilePosition position){
+		Tile tile = null;
+		int x = position.getX();
+		int y = position.getY();
+		int newY = y + 1;
+		if(newY < yBound){
+			tile = tiles[x][newY];
+		}
+		return tile;
+	}
+	
+	private Tile getLeftBottom(TilePosition position){
+		Tile tile = null;
+		int x = position.getX();
+		int y = position.getY();
+		int newX = x - 1;
+		int newY = y - 1;
+		if(newX >= 0 && newY >= 0){
+			tile = tiles[newX][newY];
+		}
+		return tile;
+	}
+
 }
