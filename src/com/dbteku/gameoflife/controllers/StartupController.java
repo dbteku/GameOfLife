@@ -9,10 +9,12 @@ public class StartupController {
 
 	private OrbitEngine engine;
 	private World world;
+	private MapController controller;
 	
 	public StartupController() {
 		engine = new OrbitEngine();
 		world = new GameOfLifeWorld();
+		controller = new MapController(world, 5);
 	}
 	
 	public void start(){
