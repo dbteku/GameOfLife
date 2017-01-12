@@ -63,8 +63,12 @@ public class Tile extends Actor<Tile>{
 	
 	@Override
 	public void onClick() {
-//		System.out.println("CLICKING ON TILE: " + getX() + "," + getY());
-		setImage(ON_IMAGE);
+		if(isOn){
+			setImage(OFF_IMAGE);
+		}else{
+			setImage(ON_IMAGE);	
+		}
+		isOn = !isOn;
 	}
 
 }
