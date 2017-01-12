@@ -20,11 +20,23 @@ public class MapController {
 		int numberOfXTiles = worldWidth / TILE_SIZE;
 		int numberofYTiles = worldHeight / TILE_SIZE;
 		tiles = new Tile[numberOfXTiles][numberofYTiles];
+		Tile lastTile = null;
 		for (int x = 0; x < numberOfXTiles; x++) {
 			for (int y = 0; y < numberofYTiles; y++) {
+				int xPosition = 0;
+				int yPosition = 0;
 				tiles[x][y] = new Tile(TILE_SIZE);
-				int xPosition = (int) ((x + 1) * tiles[x][y].getImage().getWidth()/2) + TILE_SIZE;
-				int yPosition = (int) ((y + 1) * tiles[x][y].getImage().getWidth()/2) + TILE_SIZE;
+				if(lastTile == null){
+					lastTile = tiles[x][y];
+					xPosition = (int) ((x + 1) * tiles[x][y].getImage().getWidth()/2);
+					yPosition = (int) ((y + 1) * tiles[x][y].getImage().getWidth()/2);
+				}else{
+					xPosition = 5;
+					yPosition = lastTile.getY() + 10;
+					lastTile = tiles[x][y];
+				}
+//				System.out.println(xPosition);
+//				System.out.println(yPosition);
 				world.addObject(tiles[x][y], xPosition, yPosition);
 			}
 		}
