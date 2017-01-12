@@ -13,8 +13,17 @@ import javafx.scene.input.KeyCode;
 
 public class Tile extends Actor<Tile>{
 
-	public Tile() {
-		setImage(new OrbitImage(10,10, Color.white));
+	private static OrbitImage ON_IMAGE;
+	private static OrbitImage OFF_IMAGE;
+	private boolean isOn;
+	
+	public Tile(int tileSize) {
+		if(ON_IMAGE == null){
+			ON_IMAGE = new OrbitImage(tileSize, tileSize, Color.BLACK);
+			OFF_IMAGE = new OrbitImage(tileSize, tileSize, Color.WHITE);
+		}
+		isOn = false;
+		setImage(OFF_IMAGE);
 	}
 	
 	@Override
