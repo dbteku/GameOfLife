@@ -16,7 +16,7 @@ public class MapController {
 	
 	public void createTiles(){
 		int worldWidth = world.getWidth();
-		int worldheight = world.getHeight();
+		int worldHeight = world.getHeight();
 	}
 
 }
