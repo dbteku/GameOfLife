@@ -47,7 +47,7 @@ public class MapUpdater extends Actor<MapUpdater> {
 
 	private void checkTiles(){
 		checkRules();
-		System.out.println("RUNNING");
+		//System.out.println("RUNNING");
 	}
 
 	private void checkRules(){
@@ -76,8 +76,9 @@ public class MapUpdater extends Actor<MapUpdater> {
 		Set<Tile> tiles = toChange.keySet();
 		for (Tile tile : tiles) {
 			boolean tochange = toChange.get(tile);
-			tile.setAlive(tochange);
+			tile.setAlive(false);
 		}
+		System.out.println(toChange);
 
 	}
 
@@ -186,7 +187,8 @@ public class MapUpdater extends Actor<MapUpdater> {
 	}
 
 	private void checkInput(){
-		new Thread(){
+		Thread thread = new Thread(new Runnable() {
+			
 			@Override
 			public void run() {
 				Scanner input = new Scanner(System.in);
@@ -201,7 +203,9 @@ public class MapUpdater extends Actor<MapUpdater> {
 				}
 				input.close();
 			}
-		}.start();
+		});
+		thread.setDaemon(true);
+		thread.start();
 	}
 
 }

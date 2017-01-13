@@ -19,7 +19,7 @@ public class TilePosition {
 	}
 	
 	public boolean isNull(){
-		return x >-1 || y >-1;
+		return x >-1 && y >-1;
 	}
 	
 }

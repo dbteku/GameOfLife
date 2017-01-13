@@ -114,5 +114,10 @@ public class Tile extends Actor<Tile>{
 
 		return areEqual;
 	}
+	
+	@Override
+	public String toString() {
+		return id;
+	}
 
 }

@@ -60,7 +60,7 @@ public class MapController {
 		List<Tile> neighbors = new ArrayList<>();
 		List<Tile> tryToAdd = new ArrayList<>();
 		TilePosition position = getPostition(tile);
-		if(!position.isNull()){
+		if(position != null){
 			tryToAdd.add(getLeft(position));
 			tryToAdd.add(getLeftTop(position));
 			tryToAdd.add(getTop(position));
@@ -92,7 +92,7 @@ public class MapController {
 	}
 	
 	private TilePosition getPostition(Tile tile){
-		TilePosition position = new TilePosition(-1, -1);
+		TilePosition position = null;
 		if(locations.containsKey(tile)){
 			position = locations.get(tile);
 		}
@@ -150,7 +150,7 @@ public class MapController {
 		int x = position.getX();
 		int y = position.getY();
 		int newX = x + 1;
-		if(newX < xBound - 1){
+		if(newX < xBound){
 			tile = tiles[newX][y];
 		}
 		return tile;
