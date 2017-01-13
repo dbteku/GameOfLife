@@ -25,9 +25,9 @@ public class Tile extends Actor<Tile>{
 	public Tile(String id, int tileSize) {;
 		this.id = id;
 		if(ON_IMAGE == null){
-			ON_IMAGE = new OrbitImage(tileSize, tileSize, Color.RED);
-			OFF_IMAGE = new OrbitImage(tileSize, tileSize, Color.GREEN);
-			BEEN_VISITED = new OrbitImage(tileSize,tileSize, Color.BLACK);
+			ON_IMAGE = new OrbitImage(tileSize, tileSize, Color.BLACK);
+			OFF_IMAGE = new OrbitImage(tileSize, tileSize, Color.WHITE);
+			BEEN_VISITED = new OrbitImage(tileSize,tileSize, Color.gray);
 		}
 		isAlive = false;
 		setCorrectImage();
@@ -80,6 +80,12 @@ public class Tile extends Actor<Tile>{
 	
 	public void setAlive(boolean isAlive) {
 		this.isAlive = isAlive;
+		setCorrectImage();
+	}
+	
+	public void reset(){
+		this.isAlive = false;
+		this.beenVisited = false;
 		setCorrectImage();
 	}
 	

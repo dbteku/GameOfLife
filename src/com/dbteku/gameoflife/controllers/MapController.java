@@ -233,7 +233,7 @@ public class MapController {
 	public void clear() {
 		for (int y = 0; y < yBound; y++) {
 			for (int x = 0; x < xBound; x++) {
-				tiles[x][y].setAlive(false);
+				tiles[x][y].reset();
 			}
 		}
 	}
