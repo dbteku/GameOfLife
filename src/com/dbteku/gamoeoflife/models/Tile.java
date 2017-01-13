@@ -87,6 +87,10 @@ public class Tile extends Actor<Tile>{
 			setImage(ON_IMAGE);	
 		}
 	}
+	
+	public String getId() {
+		return id;
+	}
 
 	@Override
 	public int hashCode() {
