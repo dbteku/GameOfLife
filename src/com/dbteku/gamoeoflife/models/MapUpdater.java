@@ -51,6 +51,7 @@ public class MapUpdater extends Actor<MapUpdater> {
 	}
 
 	private void checkRules(){
+//		controller.checkBoard();
 		List<Tile> alive = controller.getAliveList();
 		List<Tile> dead = findDeadNeighbors(alive);
 		Map<Tile, Boolean> toChange = new HashMap<Tile, Boolean>();
@@ -59,7 +60,6 @@ public class MapUpdater extends Actor<MapUpdater> {
 			if(keepAlive){
 				keepAlive = ruleTwo(tile);
 				if(!keepAlive){
-					System.out.println("KILL");
 					toChange.put(tile, keepAlive);
 				}
 			}else{

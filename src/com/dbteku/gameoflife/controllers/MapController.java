@@ -77,7 +77,7 @@ public class MapController {
 		}
 		return neighbors;
 	}
-	
+
 	public List<Tile> getAliveList(){
 		List<Tile> alive = new ArrayList<>();
 		for (int y = 0; y < yBound; y++) {
@@ -90,7 +90,7 @@ public class MapController {
 		}
 		return alive;
 	}
-	
+
 	private TilePosition getPostition(Tile tile){
 		TilePosition position = null;
 		if(locations.containsKey(tile.getId())){
@@ -98,7 +98,7 @@ public class MapController {
 		}
 		return position;
 	}
-	
+
 	private Tile getLeft(TilePosition position){
 		Tile tile = null;
 		int x = position.getX();
@@ -109,7 +109,7 @@ public class MapController {
 		}
 		return tile;
 	}
-	
+
 	private Tile getLeftTop(TilePosition position){
 		Tile tile = null;
 		int x = position.getX();
@@ -121,7 +121,7 @@ public class MapController {
 		}
 		return tile;
 	}
-	
+
 	private Tile getTop(TilePosition position){
 		Tile tile = null;
 		int x = position.getX();
@@ -132,7 +132,7 @@ public class MapController {
 		}
 		return tile;
 	}
-	
+
 	private Tile getRightTop(TilePosition position){
 		Tile tile = null;
 		int x = position.getX();
@@ -144,7 +144,7 @@ public class MapController {
 		}
 		return tile;
 	}
-	
+
 	private Tile getRight(TilePosition position){
 		Tile tile = null;
 		int x = position.getX();
@@ -155,7 +155,7 @@ public class MapController {
 		}
 		return tile;
 	}
-	
+
 	private Tile getRightBottom(TilePosition position){
 		Tile tile = null;
 		int x = position.getX();
@@ -167,7 +167,7 @@ public class MapController {
 		}
 		return tile;
 	}
-	
+
 	private Tile getBottom(TilePosition position){
 		Tile tile = null;
 		int x = position.getX();
@@ -178,7 +178,7 @@ public class MapController {
 		}
 		return tile;
 	}
-	
+
 	private Tile getLeftBottom(TilePosition position){
 		Tile tile = null;
 		int x = position.getX();
@@ -190,49 +190,44 @@ public class MapController {
 		}
 		return tile;
 	}
-	private void DoSimulation(){
-		
-		int aliveCounter = 0;
-		Tile tile = null;
-		Tile copiedTile = null;
-		
-		for(int i =0; i< tiles.length; i++ ){
-			for(int j =0; j<tiles[i].length; j++){
-				tile = tiles[i][j];
-				
-				if(tile.isAlive()){
-				List<Tile> neigh = getNeighbors(tile);
-				 for(Tile t : neigh){
-					 if(t.isAlive()){
-						 aliveCounter++;
-					 }
-				 }
-				 if(aliveCounter < 2){
-					  copiedTile = copyList[i][j];
-				 }
-				 else if(aliveCounter == 3 || aliveCounter ==2){
-					 copiedTile = copyList[i][j];
-				 }
-				 else if(aliveCounter< 3){
-					 copiedTile = copyList[i][j];
-				 }
-				}
-				else if(!tile.isAlive()){
-					List<Tile> neigh = getNeighbors(tile);
-					for(Tile t: neigh){
-						if(t.isAlive()){
-							aliveCounter++;
-						}
-	
-					}
-					if(aliveCounter == 3){
-						
-						copiedTile = copyList[i][j];
-					}	
-				}	
+
+	public void checkBoard(){
+		boolean[][] temp = new boolean[xBound][yBound];
+		for (int y = 0; y < yBound; y++) {
+			for (int x = 0; x < xBound; x++) {
+				temp[x][y] = tiles[x][y].isAlive();
+			}
+		}
+
+		for (int y = 0; y < yBound; y++) {
+			for (int x = 0; x < xBound; x++) {
+				int n = getAliveNeighborsCount(tiles[x][y]);
+			       if (n > 3  ||  n < 2)
+			           temp[x][y] = false;
+			       else if (n == 3)
+			           temp[x][y] = true;
+			       else
+			           temp[x][y] = tiles[x][y].isAlive();
 			}
 		}
 		
+		for (int y = 0; y < yBound; y++) {
+			for (int x = 0; x < xBound; x++) {
+				tiles[x][y].setAlive(temp[x][y]);
+			}
+		}
+
+	}
+
+	private int getAliveNeighborsCount(Tile tile){
+		int count =0;
+		List<Tile> neighbors = getNeighbors(tile);
+		for (Tile toCheck : neighbors) {
+			if(toCheck.isAlive()){
+				count++;
+			}
+		}
+		return count;
 	}
 
 }
