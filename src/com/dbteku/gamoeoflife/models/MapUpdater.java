@@ -46,6 +46,7 @@ public class MapUpdater extends Actor<MapUpdater> {
 	}
 
 	private void checkTiles(){
+		checkRules();
 		System.out.println("RUNNING");
 	}
 
@@ -75,6 +76,7 @@ public class MapUpdater extends Actor<MapUpdater> {
 		Set<Tile> tiles = toChange.keySet();
 		for (Tile tile : tiles) {
 			boolean tochange = toChange.get(tile);
+			tile.setAlive(tochange);
 		}
 
 	}

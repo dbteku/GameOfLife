@@ -150,7 +150,7 @@ public class MapController {
 		int x = position.getX();
 		int y = position.getY();
 		int newX = x + 1;
-		if(newX < xBound){
+		if(newX < xBound - 1){
 			tile = tiles[newX][y];
 		}
 		return tile;
