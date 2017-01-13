@@ -105,26 +105,16 @@ public class Tile extends Actor<Tile>{
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Tile other = (Tile) obj;
-		if (controller == null) {
-			if (other.controller != null)
-				return false;
-		} else if (!controller.equals(other.controller))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (isAlive != other.isAlive)
-			return false;
-		return true;
+		boolean areEqual = false;
+		
+		try{
+			Tile other = (Tile)obj;
+			areEqual = id.equalsIgnoreCase(other.id);
+		}catch(ClassCastException e){
+			
+		}
+		
+		return areEqual;
 	}
 
 	@Override

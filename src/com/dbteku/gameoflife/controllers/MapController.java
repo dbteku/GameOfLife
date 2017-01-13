@@ -85,7 +85,6 @@ public class MapController {
 				Tile tile = tiles[x][y];
 				if(tile.isAlive()){
 					alive.add(tile);
-					tiles[x][y].setAlive(false);
 				}
 			}	
 		}
