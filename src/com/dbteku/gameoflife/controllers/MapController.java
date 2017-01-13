@@ -13,6 +13,7 @@ public class MapController {
 
 	private final int TILE_SIZE;
 	private Tile[][] tiles;
+	private Tile[][] copyList = new Tile[100][75];
 	private World world;
 	private Map<Tile, TilePosition> locations;
 	private int xBound;
@@ -188,6 +189,50 @@ public class MapController {
 			tile = tiles[newX][newY];
 		}
 		return tile;
+	}
+	private void DoSimulation(){
+		
+		int aliveCounter = 0;
+		Tile tile = null;
+		Tile copiedTile = null;
+		
+		for(int i =0; i< tiles.length; i++ ){
+			for(int j =0; j<tiles[i].length; j++){
+				tile = tiles[i][j];
+				
+				if(tile.isAlive()){
+				List<Tile> neigh = getNeighbors(tile);
+				 for(Tile t : neigh){
+					 if(t.isAlive()){
+						 aliveCounter++;
+					 }
+				 }
+				 if(aliveCounter < 2){
+					  copiedTile = copyList[i][j];
+				 }
+				 else if(aliveCounter == 3 || aliveCounter ==2){
+					 copiedTile = copyList[i][j];
+				 }
+				 else if(aliveCounter< 3){
+					 copiedTile = copyList[i][j];
+				 }
+				}
+				else if(!tile.isAlive()){
+					List<Tile> neigh = getNeighbors(tile);
+					for(Tile t: neigh){
+						if(t.isAlive()){
+							aliveCounter++;
+						}
+	
+					}
+					if(aliveCounter == 3){
+						
+						copiedTile = copyList[i][j];
+					}	
+				}	
+			}
+		}
+		
 	}
 
 }
