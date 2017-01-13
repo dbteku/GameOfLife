@@ -51,10 +51,12 @@ public class MapUpdater extends Actor<MapUpdater> {
 	}
 
 	private void checkRules(){
+//		controller.checkBoard();
 		List<Tile> alive = controller.getAliveList();
 		List<Tile> dead = findDeadNeighbors(alive);
 		Map<Tile, Boolean> toChange = new HashMap<Tile, Boolean>();
 		for (Tile tile : alive) {
+<<<<<<< HEAD
 //			boolean keepAlive = ruleOne(tile);
 //			if(keepAlive){
 //				keepAlive = ruleTwo(tile);
@@ -67,6 +69,16 @@ public class MapUpdater extends Actor<MapUpdater> {
 //			}
 			if(ruleOne(tile) == false){
 				toChange.put(tile, false);
+=======
+			boolean keepAlive = ruleOne(tile);
+			if(keepAlive){
+				keepAlive = ruleTwo(tile);
+				if(!keepAlive){
+					toChange.put(tile, keepAlive);
+				}
+			}else{
+				toChange.put(tile, keepAlive);
+>>>>>>> 5a852f3b8bbe1a6825b758e650eee1a26bba18bd
 			}
 		}
 
@@ -204,6 +216,10 @@ public class MapUpdater extends Actor<MapUpdater> {
 						update = true;
 					}
 					else if(line.equals("stop")){
+						update = false;
+					}
+					else if(line.equals("clear")){
+						controller.clear();
 						update = false;
 					}
 				}
