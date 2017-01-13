@@ -230,4 +230,12 @@ public class MapController {
 		return count;
 	}
 
+	public void clear() {
+		for (int y = 0; y < yBound; y++) {
+			for (int x = 0; x < xBound; x++) {
+				tiles[x][y].setAlive(false);
+			}
+		}
+	}
+
 }

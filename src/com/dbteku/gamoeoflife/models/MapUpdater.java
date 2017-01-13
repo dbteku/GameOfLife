@@ -203,6 +203,10 @@ public class MapUpdater extends Actor<MapUpdater> {
 					else if(line.equals("stop")){
 						update = false;
 					}
+					else if(line.equals("clear")){
+						controller.clear();
+						update = false;
+					}
 				}
 				input.close();
 			}
