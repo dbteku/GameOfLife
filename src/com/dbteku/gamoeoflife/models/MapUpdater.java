@@ -44,7 +44,22 @@ public class MapUpdater extends Actor<MapUpdater> {
 	private void checkTiles(){
 		System.out.println("RUNNING");
 	}
-
+	
+	private void ruleOne(){
+		//each cell with one or no neighbors dies
+	}
+	
+	private void ruleTwo(){
+		//each cell with four or more dies
+	}
+	
+	private void ruleThree(){
+		//each cell with two or three cells lives
+	}
+	private void ruleFour(){
+		//each cell with three neighbors turns on
+	}
+	
 	@Override
 	public void onAnimationUpdate() {
 
