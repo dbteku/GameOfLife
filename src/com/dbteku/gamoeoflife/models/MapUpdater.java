@@ -52,33 +52,34 @@ public class MapUpdater extends Actor<MapUpdater> {
 
 	private void checkRules(){
 		List<Tile> alive = controller.getAliveList();
-		List<Tile> dead = findDeadNeighbors(alive);
-		Map<Tile, Boolean> toChange = new HashMap<Tile, Boolean>();
+		//List<Tile> dead = findDeadNeighbors(alive);
+		//Map<Tile, Boolean> toChange = new HashMap<Tile, Boolean>();
 
 		for (Tile tile : alive) {
-			boolean kill = false;
-			kill = ruleOne(tile);
-			if(!kill){
-				kill = ruleTwo(tile);
-			}
-			if(kill){
-				toChange.put(tile, !kill);
-			}
+			tile.setAlive(false);
+//			boolean kill = false;
+//			kill = ruleOne(tile);
+//			if(!kill){
+//				kill = ruleTwo(tile);
+//			}
+//			if(kill){
+//				toChange.put(tile, !kill);
+//			}
 		}
 		
-		for (Tile tile : dead) {
-			boolean born = false;
-			born = ruleFour(tile);
-			if(born){
-				toChange.put(tile, born);
-			}
-		}
-		Set<Tile> tiles = toChange.keySet();
-		for (Tile tile : tiles) {
-			boolean tochange = toChange.get(tile);
-			tile.setAlive(false);
-		}
-		System.out.println(toChange);
+//		for (Tile tile : dead) {
+//			boolean born = false;
+//			born = ruleFour(tile);
+//			if(born){
+//				toChange.put(tile, born);
+//			}
+//		}
+//		Set<Tile> tiles = toChange.keySet();
+//		for (Tile tile : tiles) {
+//			boolean tochange = toChange.get(tile);
+//			tile.setAlive(false);
+//		}
+//		System.out.println(toChange);
 
 	}
 

@@ -15,7 +15,7 @@ public class MapController {
 	private Tile[][] tiles;
 	private Tile[][] copyList = new Tile[100][75];
 	private World world;
-	private Map<Tile, TilePosition> locations;
+	private Map<String, TilePosition> locations;
 	private int xBound;
 	private int yBound;
 
@@ -42,7 +42,7 @@ public class MapController {
 				int yPosition = 0;
 				Tile tile= new Tile((x + "," + y), TILE_SIZE);
 				tiles[x][y] = tile;
-				locations.put(tile, new TilePosition(x, y));
+				locations.put(tile.getId(), new TilePosition(x, y));
 				if(lastTile == null){
 					lastTile = tiles[x][y];
 					xPosition = (int) ((x + 1) * tiles[x][y].getImage().getWidth()/2);
@@ -57,7 +57,6 @@ public class MapController {
 	}
 
 	public List<Tile> getNeighbors(Tile tile){
-		System.out.println(locations.containsKey(tile));
 		List<Tile> neighbors = new ArrayList<>();
 		List<Tile> tryToAdd = new ArrayList<>();
 		TilePosition position = getPostition(tile);
@@ -86,6 +85,7 @@ public class MapController {
 				Tile tile = tiles[x][y];
 				if(tile.isAlive()){
 					alive.add(tile);
+					tiles[x][y].setAlive(false);
 				}
 			}	
 		}
@@ -94,8 +94,8 @@ public class MapController {
 	
 	private TilePosition getPostition(Tile tile){
 		TilePosition position = null;
-		if(locations.containsKey(tile)){
-			position = locations.get(tile);
+		if(locations.containsKey(tile.getId())){
+			position = locations.get(tile.getId());
 		}
 		return position;
 	}

@@ -27,7 +27,7 @@ public class Tile extends Actor<Tile>{
 			OFF_IMAGE = new OrbitImage(tileSize, tileSize, Color.WHITE);
 		}
 		isAlive = false;
-		setImage(OFF_IMAGE);
+		setCorrectImage();
 	}
 
 	@Override
@@ -67,8 +67,8 @@ public class Tile extends Actor<Tile>{
 
 	@Override
 	public void onClick() {
-		setCorrectImage();
 		isAlive = !isAlive;
+		setCorrectImage();
 	}
 	
 	public boolean isAlive() {
@@ -82,9 +82,9 @@ public class Tile extends Actor<Tile>{
 	
 	private void setCorrectImage(){
 		if(isAlive){
-			setImage(OFF_IMAGE);
-		}else{
 			setImage(ON_IMAGE);	
+		}else{
+			setImage(OFF_IMAGE);
 		}
 	}
 	
