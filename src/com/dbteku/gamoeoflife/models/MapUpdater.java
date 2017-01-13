@@ -55,15 +55,18 @@ public class MapUpdater extends Actor<MapUpdater> {
 		List<Tile> dead = findDeadNeighbors(alive);
 		Map<Tile, Boolean> toChange = new HashMap<Tile, Boolean>();
 		for (Tile tile : alive) {
-			boolean keepAlive = ruleOne(tile);
-			if(keepAlive){
-				keepAlive = ruleTwo(tile);
-				if(!keepAlive){
-					System.out.println("KILL");
-					toChange.put(tile, keepAlive);
-				}
-			}else{
-				toChange.put(tile, keepAlive);
+//			boolean keepAlive = ruleOne(tile);
+//			if(keepAlive){
+//				keepAlive = ruleTwo(tile);
+//				if(!keepAlive){
+//					System.out.println("KILL");
+//					toChange.put(tile, keepAlive);
+//				}
+//			}else{
+//				toChange.put(tile, keepAlive);
+//			}
+			if(ruleOne(tile) == false){
+				toChange.put(tile, false);
 			}
 		}
 
@@ -110,7 +113,7 @@ public class MapUpdater extends Actor<MapUpdater> {
 				aliveCount++;
 			}
 		}
-		if(aliveCount >1){
+		if(aliveCount >1 && aliveCount < 4){
 			keepAlive = true;
 		}
 		return keepAlive;

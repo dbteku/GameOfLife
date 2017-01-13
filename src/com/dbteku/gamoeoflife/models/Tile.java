@@ -16,15 +16,18 @@ public class Tile extends Actor<Tile>{
 
 	private static OrbitImage ON_IMAGE;
 	private static OrbitImage OFF_IMAGE;
+	private static OrbitImage BEEN_VISITED;
 	private MapController controller;
 	private String id;
 	private boolean isAlive;
+	private boolean beenVisited;
 
 	public Tile(String id, int tileSize) {;
 		this.id = id;
 		if(ON_IMAGE == null){
-			ON_IMAGE = new OrbitImage(tileSize, tileSize, Color.BLACK);
-			OFF_IMAGE = new OrbitImage(tileSize, tileSize, Color.WHITE);
+			ON_IMAGE = new OrbitImage(tileSize, tileSize, Color.RED);
+			OFF_IMAGE = new OrbitImage(tileSize, tileSize, Color.GREEN);
+			BEEN_VISITED = new OrbitImage(tileSize,tileSize, Color.BLACK);
 		}
 		isAlive = false;
 		setCorrectImage();
@@ -83,8 +86,14 @@ public class Tile extends Actor<Tile>{
 	private void setCorrectImage(){
 		if(isAlive){
 			setImage(ON_IMAGE);	
+			beenVisited = true;
 		}else{
-			setImage(OFF_IMAGE);
+			if(beenVisited){
+				setImage(BEEN_VISITED);
+			}else{
+				setImage(OFF_IMAGE);
+			}
+			
 		}
 	}
 	
