@@ -54,31 +54,32 @@ public class MapUpdater extends Actor<MapUpdater> {
 		List<Tile> alive = controller.getAliveList();
 		List<Tile> dead = findDeadNeighbors(alive);
 		Map<Tile, Boolean> toChange = new HashMap<Tile, Boolean>();
-
 		for (Tile tile : alive) {
-			boolean kill = false;
-			kill = ruleOne(tile);
-			if(!kill){
-				kill = ruleTwo(tile);
-			}
-			if(kill){
-				toChange.put(tile, !kill);
+			boolean keepAlive = ruleOne(tile);
+			if(keepAlive){
+				keepAlive = ruleTwo(tile);
+				toChange.put(tile, keepAlive);
+			}else{
+				toChange.put(tile, keepAlive);
 			}
 		}
 		
 		for (Tile tile : dead) {
-			boolean born = false;
-			born = ruleFour(tile);
-			if(born){
-				toChange.put(tile, born);
+			boolean revive = false;
+			revive = ruleFour(tile);
+			if(revive){
+				toChange.put(tile, revive);
 			}
 		}
+		makeChanges(toChange);
+	}
+	
+	private void makeChanges(Map<Tile, Boolean> toChange){
 		Set<Tile> tiles = toChange.keySet();
 		for (Tile tile : tiles) {
 			boolean change = toChange.get(tile);
 			tile.setAlive(change);
 		}
-
 	}
 
 	public List<Tile> findDeadNeighbors(List<Tile> alive){
@@ -98,23 +99,23 @@ public class MapUpdater extends Actor<MapUpdater> {
 
 	private boolean ruleOne(Tile aliveTile){
 		//each cell with one or no neighbors dies
-		boolean dies = false;
+		boolean keepAlive = false;
 		List<Tile> neighbors = controller.getNeighbors(aliveTile);
-		int count = 0;
+		int aliveCount = 0;
 		for (Tile tile : neighbors) {
 			if(tile.isAlive()){
-				count++;
+				aliveCount++;
 			}
 		}
-		if(count <= 1){
-			dies = true;
+		if(aliveCount >1){
+			keepAlive = true;
 		}
-		return dies;
+		return keepAlive;
 	}
 
 	private boolean ruleTwo(Tile aliveTile){
 		//each cell with four or more dies
-		boolean dies = false;
+		boolean keepAlive = false;
 		List<Tile> neighbors = controller.getNeighbors(aliveTile);
 		int count = 0;
 		for (Tile tile : neighbors) {
@@ -122,10 +123,10 @@ public class MapUpdater extends Actor<MapUpdater> {
 				count++;
 			}
 		}
-		if(count <= 1){
-			dies = true;
+		if(count < 4){
+			keepAlive = true;
 		}
-		return dies;
+		return keepAlive;
 	}
 
 	private void ruleThree(){
