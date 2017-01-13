@@ -1,6 +1,11 @@
 package com.dbteku.gamoeoflife.models;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import com.dbteku.gameoflife.controllers.MapController;
 import com.dbteku.orbit.animation.ImageAnimation;
@@ -9,7 +14,6 @@ import com.dbteku.orbit.core.GameObject2D;
 import com.dbteku.orbit.core.World;
 import com.dbteku.orbit.imaging.OrbitImage;
 import com.dbteku.orbit.models.ScreenEdge;
-import com.sun.xml.internal.ws.api.pipe.Engine;
 
 import javafx.scene.input.KeyCode;
 
@@ -44,22 +48,106 @@ public class MapUpdater extends Actor<MapUpdater> {
 	private void checkTiles(){
 		System.out.println("RUNNING");
 	}
-	
-	private void ruleOne(){
+
+	private void checkRules(){
+		List<Tile> alive = controller.getAliveList();
+		List<Tile> dead = findDeadNeighbors(alive);
+		Map<Tile, Boolean> toChange = new HashMap<Tile, Boolean>();
+
+		for (Tile tile : alive) {
+			boolean kill = false;
+			kill = ruleOne(tile);
+			if(!kill){
+				kill = ruleTwo(tile);
+			}
+			if(kill){
+				toChange.put(tile, !kill);
+			}
+		}
+		
+		for (Tile tile : dead) {
+			boolean born = false;
+			born = ruleFour(tile);
+			if(born){
+				toChange.put(tile, born);
+			}
+		}
+		Set<Tile> tiles = toChange.keySet();
+		for (Tile tile : tiles) {
+			boolean tochange = toChange.get(tile);
+		}
+
+	}
+
+	public List<Tile> findDeadNeighbors(List<Tile> alive){
+		List<Tile> deadNeighbors = new ArrayList<Tile>();
+		for (Tile tile : alive) {
+			List<Tile> neighbors = controller.getNeighbors(tile);
+			for (Tile neig : neighbors) {
+				if(!neig.isAlive()){
+					if(!deadNeighbors.contains(neig)){
+						deadNeighbors.add(tile);
+					}
+				}
+			}
+		}
+		return deadNeighbors;
+	}
+
+	private boolean ruleOne(Tile aliveTile){
 		//each cell with one or no neighbors dies
+		boolean dies = false;
+		List<Tile> neighbors = controller.getNeighbors(aliveTile);
+		int count = 0;
+		for (Tile tile : neighbors) {
+			if(tile.isAlive()){
+				count++;
+			}
+		}
+		if(count <= 1){
+			dies = true;
+		}
+		return dies;
 	}
-	
-	private void ruleTwo(){
+
+	private boolean ruleTwo(Tile aliveTile){
 		//each cell with four or more dies
+		boolean dies = false;
+		List<Tile> neighbors = controller.getNeighbors(aliveTile);
+		int count = 0;
+		for (Tile tile : neighbors) {
+			if(tile.isAlive()){
+				count++;
+			}
+		}
+		if(count <= 1){
+			dies = true;
+		}
+		return dies;
 	}
-	
+
 	private void ruleThree(){
 		//each cell with two or three cells lives
+		//this will happen if the other two fail. 
+		//the only other option. 
+		//this method is not needed other then explaining ^
 	}
-	private void ruleFour(){
+	private boolean ruleFour(Tile deadTile){
 		//each cell with three neighbors turns on
+		boolean born = false;
+		List<Tile> neighbors = controller.getNeighbors(deadTile);
+		int count = 0;
+		for (Tile tile : neighbors) {
+			if(tile.isAlive()){
+				count++;
+			}
+		}
+		if(count == 3){
+			born = true;
+		}
+		return born;
 	}
-	
+
 	@Override
 	public void onAnimationUpdate() {
 
