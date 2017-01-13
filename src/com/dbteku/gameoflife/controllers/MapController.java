@@ -185,7 +185,7 @@ public class MapController {
 		int y = position.getY();
 		int newX = x - 1;
 		int newY = y + 1;
-		if(newX >= 0 && newY >= 0){
+		if(newX >= 0 && newY < yBound){
 			tile = tiles[newX][newY];
 		}
 		return tile;
