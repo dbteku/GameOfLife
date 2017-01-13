@@ -78,6 +78,10 @@ public class Tile extends Actor<Tile>{
 	public boolean isAlive() {
 		return isAlive;
 	}
+	
+	public void setAlive(boolean isAlive) {
+		this.isAlive = isAlive;
+	}
 
 	@Override
 	public int hashCode() {
