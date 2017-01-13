@@ -56,7 +56,6 @@ public class MapUpdater extends Actor<MapUpdater> {
 		Map<Tile, Boolean> toChange = new HashMap<Tile, Boolean>();
 
 		for (Tile tile : alive) {
-			tile.setAlive(false);
 			boolean kill = false;
 			kill = ruleOne(tile);
 			if(!kill){
@@ -79,7 +78,6 @@ public class MapUpdater extends Actor<MapUpdater> {
 			boolean change = toChange.get(tile);
 			tile.setAlive(change);
 		}
-		System.out.println(toChange);
 
 	}
 
@@ -90,7 +88,7 @@ public class MapUpdater extends Actor<MapUpdater> {
 			for (Tile neig : neighbors) {
 				if(!neig.isAlive()){
 					if(!deadNeighbors.contains(neig)){
-						deadNeighbors.add(tile);
+						deadNeighbors.add(neig);
 					}
 				}
 			}

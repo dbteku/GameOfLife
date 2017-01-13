@@ -109,7 +109,7 @@ public class Tile extends Actor<Tile>{
 		
 		try{
 			Tile other = (Tile)obj;
-			areEqual = id.equalsIgnoreCase(other.id);
+			areEqual = id.equals(other.id);
 		}catch(ClassCastException e){
 			
 		}
