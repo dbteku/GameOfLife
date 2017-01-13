@@ -40,7 +40,7 @@ public class MapController {
 			for (int y = 0; y < numberofYTiles; y++) {
 				int xPosition = 0;
 				int yPosition = 0;
-				Tile tile= new Tile(x + "," + y, TILE_SIZE);
+				Tile tile= new Tile((x + "," + y), TILE_SIZE);
 				tiles[x][y] = tile;
 				locations.put(tile, new TilePosition(x, y));
 				if(lastTile == null){
@@ -57,6 +57,7 @@ public class MapController {
 	}
 
 	public List<Tile> getNeighbors(Tile tile){
+		System.out.println(locations.containsKey(tile));
 		List<Tile> neighbors = new ArrayList<>();
 		List<Tile> tryToAdd = new ArrayList<>();
 		TilePosition position = getPostition(tile);
