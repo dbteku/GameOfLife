@@ -58,12 +58,15 @@ public class MapUpdater extends Actor<MapUpdater> {
 			boolean keepAlive = ruleOne(tile);
 			if(keepAlive){
 				keepAlive = ruleTwo(tile);
-				toChange.put(tile, keepAlive);
+				if(!keepAlive){
+					System.out.println("KILL");
+					toChange.put(tile, keepAlive);
+				}
 			}else{
 				toChange.put(tile, keepAlive);
 			}
 		}
-		
+
 		for (Tile tile : dead) {
 			boolean revive = false;
 			revive = ruleFour(tile);
@@ -73,7 +76,7 @@ public class MapUpdater extends Actor<MapUpdater> {
 		}
 		makeChanges(toChange);
 	}
-	
+
 	private void makeChanges(Map<Tile, Boolean> toChange){
 		Set<Tile> tiles = toChange.keySet();
 		for (Tile tile : tiles) {
@@ -188,7 +191,7 @@ public class MapUpdater extends Actor<MapUpdater> {
 
 	private void checkInput(){
 		Thread thread = new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				Scanner input = new Scanner(System.in);
