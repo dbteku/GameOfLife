@@ -67,11 +67,7 @@ public class Tile extends Actor<Tile>{
 
 	@Override
 	public void onClick() {
-		if(isAlive){
-			setImage(OFF_IMAGE);
-		}else{
-			setImage(ON_IMAGE);	
-		}
+		setCorrectImage();
 		isAlive = !isAlive;
 	}
 	
@@ -79,14 +75,17 @@ public class Tile extends Actor<Tile>{
 		return isAlive;
 	}
 	
-	public void makeAlive(){
-		isAlive = true;
-		setImage(ON_IMAGE);
+	public void setAlive(boolean isAlive) {
+		this.isAlive = isAlive;
+		setCorrectImage();
 	}
 	
-	public void kill(){
-		isAlive = false;
-		setImage(OFF_IMAGE);
+	private void setCorrectImage(){
+		if(isAlive){
+			setImage(OFF_IMAGE);
+		}else{
+			setImage(ON_IMAGE);	
+		}
 	}
 
 	@Override
