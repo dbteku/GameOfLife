@@ -79,8 +79,14 @@ public class Tile extends Actor<Tile>{
 		return isAlive;
 	}
 	
-	public void setAlive(boolean isAlive) {
-		this.isAlive = isAlive;
+	public void makeAlive(){
+		isAlive = true;
+		setImage(ON_IMAGE);
+	}
+	
+	public void kill(){
+		isAlive = false;
+		setImage(OFF_IMAGE);
 	}
 
 	@Override
